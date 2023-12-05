@@ -69,6 +69,7 @@ def get_products_byid(subcategorylink, productgroupid, ctgr, sbctgr):
                 "Category": ctgr,
                 "SubCategroy": sbctgr,
                 "Name": entry["Name"],
+                "Url": "https://www.nemlig.com/" + entry["Url"],
                 "Description": entry["Description"],
                 "Price": entry["Price"],
                 "PrimaryImage": entry["PrimaryImage"],
@@ -80,52 +81,6 @@ def get_products_byid(subcategorylink, productgroupid, ctgr, sbctgr):
         print('An error has occurred. Status Code:', response.status_code)
 
         return []
-
-
-'''
-def get_sprdt(subcategorylink):
-    # get group ids
-    pgroups = get_product_groups("/dagligvarer/drikkevarer/sodavand/cola")
-    print(pgroups)
-
-    # The target URL to make a GET request
-    url = f"https://www.nemlig.com{subcategorylink}"
-
-    options = Options()
-    # options.add_argument('--headless')
-
-    driver = webdriver.Chrome()
-    driver.get(url)
-    time.sleep(30)
-
-    products = []
-    for request in driver.requests:
-        if 'Products/GetByProductGroupI' in request.url:
-            url = request.url
-            gid = url.split("productGroupId=")[1]
-            print(gid)
-            if gid in pgroups:
-                print(url)
-                headers = request.headers            
-                with open("headers.json", "w") as f:
-                    json.dump(dict(headers), f)
-                res = requests.get(url, headers = headers)
-                print(res.status_code)
-                res = res.json()
-                
-                detailed_products = res["Products"]
-                for entry in detailed_products:
-                    prdt = {
-                        "PrimaryImage": entry["PrimaryImage"],
-                        "Name": entry["Name"],
-                        "Description": entry["Description"],
-                        "Price": entry["Price"],
-                    }
-                    products.append(prdt)
-            # break
-    return products
-'''
-
 
 
 def get_products(subcategory, ctgr, sbctgr):
